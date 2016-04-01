@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--  申明网页编码 -->
+  <meta charset="UTF-8">
+  <title>页面标题</title>
+  <!-- 页面关键字与描述 -->
+  <meta name="keywords" content="key1, key2">
+  <meta name="description" content="这里是描述">
+
+  <!-- 脚本加载测试 -->
+  <script>
+    alert('同步的, 这时候dom 页面还没有渲染好');
+  </script>
+
+  <!-- 同步阻塞加载 -->
+  <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.js"></script>
+
+  <script>
+    alert('同步阻塞加载'+jQuery.fn.jquery); // 2.2.1
+  </script>
+  <script async src="./js_async.js" charset="utf-8"></script>
+  <script defer src="./js_defer.js" charset="utf-8"></script>
+
+
+</head>
+<body>
+<ul>
+  <li>123</li>
+  <li>123</li>
+</ul>
+
+<dl>
+  <dt>definition title</dt>
+  <dd>definition description</dd>
+  <dt>definition title2</dt>
+  <dd>definition description2</dd>
+</dl>
+
+<span>行内元素</span>
+<pre>This text is preformatted</pre>
+<span>行内元素</span>
+
+<blockquote>
+Text quoted from some source.
+</blockquote>
+<address>
+Address 1<br>
+Address 2<br>
+City<br>
+</address>
+
+<span>check textarea is inline element</span><textarea name="name" rows="8" cols="40"></textarea>
+</body>
+</html>
