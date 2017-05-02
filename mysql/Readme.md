@@ -19,13 +19,9 @@
 sql 开发技巧偏向于 DML.
 
 
-
-
 > NOTE !
 
 ## DOCKER MYSQL PHPMYADMIN
-
-
 
 ```shell
 # 创建 mysql 服务实例

@@ -293,7 +293,7 @@ INSERT INTO baseball VALUES
 ('C', 2013, 'green', 18)
 ```
 
-求 每个球员得分最近最高得分的数据,
+求 每个球员得分最近最高得分的数据?
 
 
 
@@ -307,7 +307,7 @@ SELECT a.`user_name`, b.`timestr`, b.`kills`
 FROM user1 a
 JOIN user_kills b
 ON a.`id` = b.`user_id`
-WHERE a.`user_name` = '孙悟空'
+WHERE a.`user_name` = '猪八戒'
 ORDER BY b.`kills` desc
 LIMIT 2
 ```
@@ -320,16 +320,15 @@ LIMIT 2
 4. 增加网络流量
 
 ```
-SELECT c.`user_name`, d.`timestr`, d.`kills` 
-FROM user1 c
-LEFT JOIN (
-    SELECT a.`user_name`, b.`timestr`, b.`kills` 
-    FROM user1 a
-    JOIN user_kills b
-    ON a.`id` = b.`user_id`
-    WHERE a.`user_name` = c.`user_name`
-    ORDER BY b.`kills` desc
-    LIMIT 2
-) as d 
-ON c.`user_name` = d.`user_name`
+SELECT d.user_name, c.timestr, kills 
+FROM (
+    SELECT user_id, timestr, kills, (
+        SELECT COUNT(*) FROM user_kills b 
+        WHERE b.user_id = a.user_id AND a.kills <= b.kills 
+    ) AS cnt 
+    FROM user_kills a
+    GROUP BY user_id, timestr, kills
+) c
+JOIN user1 d ON c.user_id = d.id
+WHERE cnt <=2;
 ```
