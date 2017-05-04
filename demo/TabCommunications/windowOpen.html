@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>通过 window.open 可以获得子 窗口的权限</title>
+</head>
+<body>
+    <div>
+        <button id='btnOpen'>
+            打开子窗口
+        </button>
+        <button id='btnClose'>
+            关闭子窗口
+        </button>
+    </div>
+    <div>
+        <input id='inputEle' type="text" placeholder='输出内容传入子窗口' />
+        <button id='sendEle'> 发送 </button>
+    </div>
+</body>
+<script>
+var btnOpen = document.getElementById('btnOpen');
+var btnClose = document.getElementById('btnClose');
+var inputEle = document.getElementById('inputEle');
+var sendEle = document.getElementById('sendEle');
+
+var childrenW;
+
+btnOpen.onclick = function () {
+    childrenW = window.open('windowOpen_children.html', 'popup', 'width=300,height=300,left=0,top=10');
+}
+
+sendEle.onclick = function () {
+    var val = inputEle.value;
+    childrenW.document.getElementById('winChildren').innerHTML = val;
+}
+
+btnClose.onclick = function () {
+    childrenW.close();
+}
+
+
+
+</script>
+</html>

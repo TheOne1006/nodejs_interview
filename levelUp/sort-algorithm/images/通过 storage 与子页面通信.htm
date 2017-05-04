@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- saved from url=(0036)http://localhost:8080/storageLinsten -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>通过 storage 与子页面通信 </title>
+</head>
+<body>
+    <div>
+        <a href="http://localhost:8080/storage_children.html" target="view_window">子页面</a>
+    </div>
+    <div>
+        <input id="inputEle" type="text" placeholder="输出内容传入子tab">
+        <button id="sendEle"> 发送 </button>
+        <div>
+            <h2>聊天记录</h2>
+            <div id="content">
+            </div>
+        </div>
+    </div>
+
+<script>
+// 修改原有的 setItem
+var orignalSetItem = localStorage.setItem;
+localStorage.setItem = function(key,newValue){
+    var setItemEvent = new Event("setItemEvent");
+    setItemEvent.newValue = newValue;
+    window.dispatchEvent(setItemEvent);
+    orignalSetItem.apply(this,arguments);
+}
+
+    var sendEle = document.getElementById('sendEle');
+    var inputEle = document.getElementById('inputEle');
+    var contentEle = document.getElementById('content');
+
+    sendEle.onclick = function () {
+        var txt = inputEle.value;
+        localStorage.setItem('toChildren', txt);
+        addMessage(txt, 'self');
+    }
+
+
+
+    function addMessage (txt, who) {
+        var html = document.createElement('p');
+        html.innerHTML = who + ' : ' + txt;
+        contentEle.append(html)
+    }
+
+    // 监听 storage.toChildren
+    window.addEventListener("setItemEvent", function (e) {
+        if (e.key === 'toTop') {
+            addMessage(e.newValue, 'children');
+        }
+    });
+
+</script>
+
+</body></html>

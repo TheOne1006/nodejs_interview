@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>storage 子页面</title>
+</head>
+<body>
+    <h2>我是 storage 的子页面</h2>
+    <div>
+        <input id='inputEle' type="text" placeholder='输出内容传入父tab' />
+        <button id='sendEle'> 发送 </button>
+        <div>
+            <h2>聊天记录</h2>
+            <div id='content'>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+// 修改原有的 setItem
+// var orignalSetItem = localStorage.setItem;
+// localStorage.setItem = function(key,newValue){
+//     var setItemEvent = new Event("setItemEvent");
+//     setItemEvent.newValue = newValue;
+//     window.dispatchEvent(setItemEvent);
+//     orignalSetItem.apply(this,arguments);
+// }
+
+    var sendEle = document.getElementById('sendEle');
+    var inputEle = document.getElementById('inputEle');
+    var contentEle = document.getElementById('content');
+
+    sendEle.onclick = function () {
+        var txt = inputEle.value;
+        localStorage.setItem('toTop', txt);
+        addMessage(txt, 'self');
+    }
+
+
+
+    function addMessage (txt, who) {
+        var html = document.createElement('p');
+        html.innerHTML = who + ' : ' + txt;
+        contentEle.append(html)
+    }
+
+    // 监听 storage.toChildren
+    // window.addEventListener("setItemEvent", function (e) {
+    //     if (e.key === 'toChildren') {
+    //         addMessage(e.newValue, 'top');
+    //     }
+    // });
+
+    window.addEventListener("storage", function (e) {
+        if (e.key === 'toChildren') {
+            addMessage(e.newValue, 'top');
+        }
+   });
+</script>
+</html>
