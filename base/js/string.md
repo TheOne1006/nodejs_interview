@@ -51,3 +51,20 @@
 12. substring(start: number,stop? : number) => string
     * 提取字符串中介于两个指定下标之间的字符
     * stop 为结束字符 + 1
+
+### ES2015 扩展
+
+1. Unicode 表示法
+    * \uxxxx形式表示一个字符，其中xxxx表示字符的 Unicode 码点
+2. includes(search: string, start?: number = 0) => boolean
+    * 返回布尔值，表示是否找到了参数字符串
+    * 第二个参数，表示开始搜索的位置
+3. startsWith(search: string, start?: number = 0) => boolean
+    * 返回布尔值，表示参数字符串是否在源字符串的头部
+    * 第二个参数，表示开始搜索的位置
+4. endsWith(search: string, length?: number = 0) => boolean
+    * 返回布尔值，表示参数字符串是否在源字符串的尾部
+    * 第二个参数，针对前 number 个字符
+5. repeat(time: number) => string
+    * 返回一个新字符串，表示将原字符串重复n次
+    * repeat的参数是 __负数__ 或者 __Infinity__，会报错
